@@ -20,6 +20,16 @@ namespace DotDev.Utils
 			_servicesDictionary.Add(typeof(T), service);
 		}
 
+		public void Unregister(object key, object service)
+		{
+			_servicesDictionary.Remove(key);
+		}
+
+		public void Unregister<T>(T service)
+		{
+			_servicesDictionary.Remove(typeof(T));
+		}
+
 		public T Resolve<T>()
 		{
 			return (T)_servicesDictionary[typeof(T)];
