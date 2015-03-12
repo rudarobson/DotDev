@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DotDev.UnitOfWork.EF.Extensions;
+using DotDev.UnitOfWork.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -8,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DotDev.UnitOfWork.EF
 {
-	public partial class EFRepository<T> : IRepository<T> where T : class
+	public partial class EFRepository<T> : IRepository<T>, IEFRepositoryExtended<T>, IRepositoryExtended<T> where T : class
 	{
 		protected DbContext _dbContext = null;
 
@@ -43,6 +45,11 @@ namespace DotDev.UnitOfWork.EF
 		}
 
 		public IQueryable<T> Include<TProperty>(Expression<Func<T, TProperty>> path) where TProperty : class
+		{
+			return _dbContext.Set<T>().Include(path);
+		}
+
+		public IQueryable<T> Include(string path)
 		{
 			return _dbContext.Set<T>().Include(path);
 		}

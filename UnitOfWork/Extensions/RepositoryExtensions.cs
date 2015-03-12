@@ -16,13 +16,14 @@ namespace DotDev.UnitOfWork.Extensions
 
 	public static class IRepositoryExtension
 	{
+		private const string ExceptionMessage = "Does not implement IRepositoryExtended<T>";
 		public static void AddRange<T>(this IRepository<T> myInterface, IEnumerable<T> range)
 		{
 			if (myInterface is IRepositoryExtended<T>)
 				(myInterface as IRepositoryExtended<T>).AddRange(range);
 			else
 			{
-				throw new Exception("AddRange is Unknown");
+				throw new Exception(ExceptionMessage);
 			}
 		}
 
@@ -32,7 +33,7 @@ namespace DotDev.UnitOfWork.Extensions
 				(myInterface as IRepositoryExtended<T>).RemoveRange(range);
 			else
 			{
-				throw new Exception("RemoveRange is Unknown");
+				throw new Exception(ExceptionMessage);
 			}
 		}
 
@@ -42,7 +43,7 @@ namespace DotDev.UnitOfWork.Extensions
 				return (myInterface as IRepositoryExtended<T>).Count(path);
 			else
 			{
-				throw new Exception("Count is Unknown");
+				throw new Exception(ExceptionMessage);
 			}
 		}
 	}
