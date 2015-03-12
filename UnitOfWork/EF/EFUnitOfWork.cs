@@ -7,15 +7,17 @@ using System.Threading.Tasks;
 
 namespace DotDev.UnitOfWork.EF
 {
-	public partial class EFUnitOfWork : UnitOfWork,IDisposable
+	public partial class EFUnitOfWork : IDisposable,IUnitOfWork
 	{
+		protected IDictionary<Type, object> IRepositoryDictionary = new Dictionary<Type, object>();
+
 		private DbContext _context;
 		
 		public EFUnitOfWork(DbContext context){
 			_context = context;
 		}
 
-		public override IRepository<T> Resolve<T>()
+		public IRepository<T> Resolve<T>() where T : class
 		{
 			if (IRepositoryDictionary[typeof(T)] == null)
 				IRepositoryDictionary[typeof(T)] = new EFRepository<T>(_context);
@@ -23,15 +25,24 @@ namespace DotDev.UnitOfWork.EF
 			return (IRepository<T>) IRepositoryDictionary[typeof(T)];
 		}
 
-		public override void SaveChanges()
+		public void SaveChanges()
 		{
 			_context.SaveChanges();
 		}
 
+		private bool _isDisposed = false;
 		public void Dispose()
 		{
-			if (_context != null)
-				_context.Dispose();
+			if (!_isDisposed)
+			{
+				if (_context != null)
+					_context.Dispose();
+
+				IRepositoryDictionary.Clear();
+				IRepositoryDictionary = null;
+				GC.SuppressFinalize(this);
+				_isDisposed = true;
+			}
 		}
 	}
 }
