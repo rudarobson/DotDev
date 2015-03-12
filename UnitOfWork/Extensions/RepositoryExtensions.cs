@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DotDev.UnitOfWork.Extensions
 {
-	internal interface IRepositoryExtended<T> : IRepository<T>
+	public interface IRepositoryExtended<T> : IRepository<T>
 	{
 		void AddRange(IEnumerable<T> range);
 		void RemoveRange(IEnumerable<T> range);

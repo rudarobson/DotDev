@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DotDev.UnitOfWork.EF.Extensions
 {
-	internal interface IRepositoryExtended<T> : IRepository<T>
+	public interface IRepositoryExtended<T> : IRepository<T>
 	{
 		IQueryable<T> Query();
 		IQueryable<T> Include(string path);
