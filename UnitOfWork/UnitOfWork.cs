@@ -7,7 +7,7 @@ using DotDev.UnitOfWork.Extensions;
 
 namespace DotDev.UnitOfWork
 {
-	public abstract class UnitOfWork
+	public abstract partial class UnitOfWork : IUnitOfWork
 	{
 		protected IDictionary<Type, object> IRepositoryDictionary = new Dictionary<Type, object>();
 		public abstract IRepository<T> Resolve<T>() where T : class;

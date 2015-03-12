@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DotDev.UnitOfWork.EF
 {
-	internal class EFRepository<T> : IRepository<T> where T : class
+	public partial class EFRepository<T> : IRepository<T> where T : class
 	{
 		protected DbContext _dbContext = null;
 

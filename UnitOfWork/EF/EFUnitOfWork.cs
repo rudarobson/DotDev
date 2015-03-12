@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DotDev.UnitOfWork.EF
 {
-	public class EFUnitOfWork : UnitOfWork,IDisposable
+	public partial class EFUnitOfWork : UnitOfWork,IDisposable
 	{
 		private DbContext _context;
 		
